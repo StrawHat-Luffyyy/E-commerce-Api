@@ -18,7 +18,6 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Please Provide a password"],
       minlenght: 6,
-      select: false,
     },
     role: {
       type: String,
