@@ -4,7 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "seed": "node seeder.js",
+   "seed:destroy": "node seeder.js -d"
   },
   "keywords": [],
   "author": "",

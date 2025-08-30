@@ -6,6 +6,7 @@ import morgan from "morgan";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import { protect, adminOnly } from "./middlewares/auth.middleware.js";
+import productRoutes from "./routes/product.routes.js"
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 // Routes placeholder
 app.get("/", (req, res) => {

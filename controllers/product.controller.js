@@ -20,18 +20,50 @@ const createProduct = async (req, res) => {
   }
 };
 
-
 // Get Single Product By Id
-const getProductById = async (req,res) => {
+const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id)
-    if(!product){
-      return res.status(402).json({message:"Product Not Found"})
-    }    
-    return res.status(201).json({success:true , product})
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(402).json({ message: "Product Not Found" });
+    }
+    return res.status(201).json({ success: true, product });
   } catch (error) {
-    console.log(error.message)
-    return res.status(500).json({message:"Server Error"})
+    console.log(error.message);
+    return res.status(500).json({ message: "Server Error" });
   }
-}
-export { createProduct , getProductById };
+};
+
+// UpdateProduct
+const updateProduct = async (req, res) => {
+  try {
+    const existingproduct = await Product.findById(req.params.id);
+    if (!existingproduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.json({ success: true, product });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
+
+// DeleteProduct
+const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    await product.deleteOne();
+    res.json({ success: true, message: "Product deleted" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
+export { createProduct, getProductById, updateProduct, deleteProduct };
